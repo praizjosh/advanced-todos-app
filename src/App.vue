@@ -1,22 +1,25 @@
 <template>
-  <div class="mx-auto w-full md:w-[740px] mt-0 md:mt-16" id="app">
-    <TaskForm />
+  <div class="mx-auto w-full md:w-[550px] mt-0 md:mt-16" id="app">
+    <Header />
+    <!-- <TaskForm /> -->
     <TaskList />
-    <Foot />
+    <Footer />
   </div>
 </template>
 
 <script>
+import Header from "./components/Header.vue";
 import TaskForm from "./components/TaskForm.vue";
 import TaskList from "./components/TaskList.vue";
-import Foot from "./components/Foot.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
+    Header,
     TaskForm,
     TaskList,
-    Foot,
+    Footer,
   },
 };
 </script>

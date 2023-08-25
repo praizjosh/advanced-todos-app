@@ -69,20 +69,26 @@
               >
                 <!-- Display original task or input field for editing -->
                 <template v-if="editingIndex !== index">
-                  <span
-                    class="cursor-text"
-                    :class="{ 'line-through': task.completed }"
-                    @click="startEditing(index)"
-                  >
-                    {{ task.description }}
-                  </span>
+                  <div class="flex flex-col">
+                    <span
+                      class="text-xl cursor-text"
+                      :class="{ 'line-through': task.completed }"
+                      @click="startEditing(index)"
+                    >
+                      {{ task.description }}
+                    </span>
+                    <span class="text-sm opacity-80"
+                      >Due: {{ task.dueDate }}</span
+                    >
+                  </div>
                 </template>
                 <template v-else>
                   <input
                     v-model="editedTask"
                     @keyup.enter="updateTask(index)"
                     @blur="cancelEditing"
-                    class="w-full bg-slate-50 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 p-1.5 opacity-80"
+                    @keydown.escape="cancelEditing"
+                    class="w-full bg-slate-50 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 p-1.5 opacity-90"
                   />
                 </template>
               </td>
@@ -141,7 +147,7 @@
                     />
                   </svg>
                 </template>
-
+                <span class="text-slate-300">|</span>
                 <svg
                   @click="showDeleteModal(index)"
                   class="w-[20px] h-[20px] text-red-600 hover:text-gray-700"

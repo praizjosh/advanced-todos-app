@@ -12,8 +12,12 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
-    addTask(state, taskDescription) {
-      state.tasks.push({ description: taskDescription, completed: false });
+    addTask(state, { description, dueDate }) {
+      state.tasks.push({
+        description: description,
+        dueDate: dueDate,
+        completed: false
+      });
     },
     CLEAR_TASKS(state) {
       state.tasks = []; // Reset state:tasks to initial render state
@@ -32,8 +36,8 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    addTask({ commit }, task) {
-      commit('addTask', task);
+    addTask({ commit }, { description, dueDate }) {
+      commit('addTask', { description, dueDate });
     },
     clearTasks({ commit }) {
       commit("CLEAR_TASKS");

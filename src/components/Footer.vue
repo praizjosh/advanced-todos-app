@@ -1,7 +1,7 @@
 <template>
-  <footer class="bg-slate-100 p-4 text-center text-xs rounded-b-lg">
+  <footer class="bg-slate-100 p-4 text-center text-xs my-4 rounded-lg">
     <p class="text-gray-600">
-      &copy; {{ currentYear }} All rights reserved. | Made with 💖 by
+      &copy; {{ currentYear }} | Made with 💖 by
       <a
         class="hover:text-indigo-500 decoration-indigo-600 hover:underline hover:underline-offset-4"
         href="https://github.com/praizjosh/"
