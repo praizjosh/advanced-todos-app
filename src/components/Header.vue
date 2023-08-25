@@ -3,12 +3,12 @@
     class="bg-white my-6 flex flex-col space-y-4 px-8 py-8 shadow rounded"
   >
     <div class="flex justify-between items-center space-x-4">
-      <div class="w-1/2 md:w-3/4">
+      <div class="w-1/2 md:w-3/5">
         <h1 class="font-medium text-2xl md:text-3xl text-blue-600">
           Task Tracker
         </h1>
       </div>
-      <div class="w-1/2 md:w-1/4">
+      <div class="w-1/2 md:w-2/5">
         <Button text="Add New Task" class="bg-indigo-600 hover:bg-indigo-700" />
       </div>
     </div>
