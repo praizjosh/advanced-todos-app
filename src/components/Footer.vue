@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-slate-100 p-4 text-center text-xs my-4 rounded-lg">
+  <footer class="bg-slate-300 p-4 text-center text-xs my-4 rounded-lg">
     <p class="text-gray-600">
       &copy; {{ currentYear }} | Made with 💖 by
       <a

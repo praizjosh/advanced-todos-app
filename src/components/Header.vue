@@ -9,7 +9,16 @@
         </h1>
       </div>
       <div class="w-1/2 md:w-2/5">
-        <Button text="Add New Task" class="bg-indigo-600 hover:bg-indigo-700" />
+        <Button
+          @click="toggleAddTask"
+          :showAddTask="showAddTask"
+          :text="showAddTask ? 'Close' : 'Add Task'"
+          :class="
+            showAddTask
+              ? 'bg-red-600 hover:bg-red-700'
+              : 'bg-indigo-600 hover:bg-indigo-700'
+          "
+        />
       </div>
     </div>
     <div class="mb-2 mt-8">
@@ -17,7 +26,10 @@
     </div>
 
     <!-- Add New Task -->
-    <div class="flex flex-col space-y-4 justify-between items-center">
+    <div
+      v-show="showAddTask"
+      class="flex flex-col space-y-4 justify-between items-center"
+    >
       <div class="w-full">
         <input
           v-model="newTask"
@@ -61,17 +73,22 @@ import Calendar from "./Calendar.vue";
 export default {
   data() {
     return {
+      showAddTask: false,
       newTask: "",
       dueDate: null,
       calendarOpen: true,
     };
   },
+  created() {},
   name: "Header",
   components: {
     Button,
     Calendar,
   },
   methods: {
+    toggleAddTask() {
+      this.showAddTask = !this.showAddTask;
+    },
     addTask() {
       if (this.newTask !== "" && this.dueDate !== null) {
         const formattedDueDate = this.formatDueDate(this.dueDate);

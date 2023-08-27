@@ -1,5 +1,6 @@
 <template>
-  <div class="mx-auto p-4 w-full md:w-[550px] mt-0 md:mt-16" id="app">
+  <div class="mx-auto p-4 w-full md:w-[600px] mt-0 md:mt-16" id="app">
+    <span class="p-1 text-2xl text-blue-600"> Hello! </span>
     <Header />
     <!-- <TaskForm /> -->
     <TaskList />

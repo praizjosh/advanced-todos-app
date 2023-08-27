@@ -2,9 +2,9 @@
 
 <script>
 export default {
-  name: "Tasks",
+  name: "Task",
   props: {
-    tasks: Array,
+    task: Object,
   },
 };
 </script>
