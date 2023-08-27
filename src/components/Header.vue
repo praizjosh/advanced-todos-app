@@ -1,6 +1,6 @@
 <template>
   <header
-    class="bg-white my-6 flex flex-col space-y-4 px-8 py-8 shadow rounded"
+    class="bg-white my-6 flex flex-col space-y-4 px-8 py-8 shadow rounded-lg"
   >
     <div class="flex justify-between items-center space-x-4">
       <div class="w-1/2 md:w-3/5">
@@ -28,7 +28,12 @@
       </div>
 
       <div class="w-full">
-        <Calendar v-model="dueDate" @input="calendarOpen = false" />
+        <Calendar
+          id="cal"
+          ref="dueDateCalendar"
+          v-model="dueDate"
+          @input="calendarOpen = false"
+        />
       </div>
 
       <div class="w-full flex space-x-4 justify-evenly items-center">
@@ -67,10 +72,6 @@ export default {
     Calendar,
   },
   methods: {
-    formatDueDate(dueDate) {
-      const parsedDate = parse(dueDate, "d-M-yyyy H:mm", new Date()); // Parse the selected date using "d-M-yyyy H:mm" format
-      return format(parsedDate, "dd MMM yyyy HH:mm a"); // Format the date as "30 Aug 2023 02:10 AM"
-    },
     addTask() {
       if (this.newTask !== "" && this.dueDate !== null) {
         const formattedDueDate = this.formatDueDate(this.dueDate);
@@ -79,11 +80,24 @@ export default {
           dueDate: formattedDueDate,
         });
         this.newTask = "";
+        // this.resetCalendar();
         this.dueDate = null; // Set dueDate back to null
       } else {
         alert("Field can't be blank. Please enter a valid task and due date.");
       }
     },
+    formatDueDate(dueDate) {
+      const parsedDate = parse(dueDate, "d-M-yyyy H:mm", new Date()); // Parse the selected date using "d-M-yyyy H:mm" format
+      return format(parsedDate, "dd MMM yyyy HH:mm a"); // Format the date as "30 Aug 2023, 02:10 AM"
+    },
+    // resetCalendar() {
+    //   const calendar = document.querySelector("#cal").flatpickr();
+    //   if (calendar) {
+    //     console.log(calendar);
+    //     // this.$refs.dueDateCalendar.clear(); // Call the reset method of the Calendar component
+    //     calendar.clear();
+    //   }
+    // },
     clearTasks() {
       this.$store.dispatch("clearTasks"); // Clear all the tasks
       this.newTask = ""; // Clear the input field

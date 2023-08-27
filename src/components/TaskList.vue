@@ -71,9 +71,8 @@
                 <template v-if="editingIndex !== index">
                   <div class="flex flex-col">
                     <span
-                      class="text-xl cursor-text"
+                      class="text-xl"
                       :class="{ 'line-through': task.completed }"
-                      @click="startEditing(index)"
                     >
                       {{ task.description }}
                     </span>
@@ -84,12 +83,14 @@
                 </template>
                 <template v-else>
                   <input
-                    v-model="editedTask"
+                    v-model="editedTask.description"
                     @keyup.enter="updateTask(index)"
-                    @blur="cancelEditing"
                     @keydown.escape="cancelEditing"
                     class="w-full bg-slate-50 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 p-1.5 opacity-90"
                   />
+                  <Calendar v-model="editedTask.dueDate" />
+
+                  <!-- Use your Calendar component here -->
                 </template>
               </td>
 
@@ -182,6 +183,8 @@
 
 <script>
 import DeleteTaskModal from "@/components/DeleteTaskModal.vue";
+import Calendar from "./Calendar.vue";
+import { parse, format } from "date-fns"; // Import Date formatter function
 
 export default {
   data() {
@@ -199,29 +202,46 @@ export default {
   },
   components: {
     DeleteTaskModal, // Move this outside the computed property
+    Calendar,
   },
   methods: {
     startEditing(index) {
       this.editingIndex = index;
-      this.editedTask = this.tasks[index].description;
+      this.editedTask = {
+        description: this.tasks[index].description,
+        dueDate: this.tasks[index].dueDate,
+      };
     },
     cancelEditing() {
       this.editingIndex = -1;
       this.editedTask = "";
     },
     updateTask(index) {
-      if (this.editedTask.trim() !== "") {
+      if (this.editedTask.description.trim() !== "") {
         this.$store.commit("UPDATE_TASK", {
           index,
           task: {
             ...this.tasks[index],
-            description: this.editedTask,
+            description: this.editedTask.description,
+            dueDate: this.editedTask.dueDate, // Assign the formatted due date here
             completed: this.tasks[index].completed, // Preserve completion status
           },
         });
+
+        // Format the due date consistently with the parse format
+        const parsedDueDate = parse(
+          this.editedTask.dueDate,
+          "dd-M-yyyy HH:mm",
+          new Date()
+        );
+        this.tasks[index].dueDate = format(
+          parsedDueDate,
+          "dd MMM yyyy, HH:mm a"
+        );
+
         this.cancelEditing();
       } else {
-        alert("Field can't be blank. Please enter a valid task.");
+        alert("Field can't be blank. Please enter a valid task or due date.");
       }
     },
     duplicateTask(index) {

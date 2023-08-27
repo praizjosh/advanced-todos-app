@@ -42,15 +42,16 @@ export default new Vuex.Store({
     clearTasks({ commit }) {
       commit("CLEAR_TASKS");
     },
-    startEditing({ commit }) {
-      commit("EDIT_TASK");
+    startEditing({ commit }, { index, task }) {
+      commit("EDIT_TASK", { index, task });
     },
-    updateTask({ commit }) {
-      commit("UPDATE_TASK");
+    updateTask({ commit }, { index, task }) {
+      commit("UPDATE_TASK", { index, task });
     },
-    deleteTask({ commit }, task) {
-      commit("DELETE_TASK"), task;
+    deleteTask({ commit }, index) {
+      commit("DELETE_TASK", index);
     },
+
   },
   modules: {
   }
