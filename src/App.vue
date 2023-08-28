@@ -1,8 +1,7 @@
 <template>
-  <div class="mx-auto p-4 w-full md:w-[600px] mt-0 md:mt-16" id="app">
-    <span class="p-1 text-2xl text-blue-600"> Hello! </span>
+  <div class="mx-auto p-4 w-full md:w-[560px] mt-0 md:mt-16" id="app">
+    <Tasks />
     <Header />
-    <!-- <TaskForm /> -->
     <TaskList />
     <Footer />
   </div>
@@ -10,7 +9,7 @@
 
 <script>
 import Header from "./components/Header.vue";
-import TaskForm from "./components/TaskForm.vue";
+import Tasks from "./components/Tasks.vue";
 import TaskList from "./components/TaskList.vue";
 import Footer from "./components/Footer.vue";
 
@@ -18,7 +17,7 @@ export default {
   name: "App",
   components: {
     Header,
-    TaskForm,
+    Tasks,
     TaskList,
     Footer,
   },
