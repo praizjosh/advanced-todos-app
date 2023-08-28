@@ -7,10 +7,7 @@
       :key="index"
       :task="task"
       :index="index"
-      :class="{
-        'completed-task': task.completed,
-        'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-600': true,
-      }"
+      class="bg-white hover:bg-indigo-50"
     />
   </div>
 </template>

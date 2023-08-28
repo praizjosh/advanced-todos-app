@@ -23,7 +23,7 @@ export default {
     return {
       selectedDate: this.value || null,
       flatpickrConfig: {
-        minDate: "today", // This will disable previous dates before today
+        //    minDate: "today", // This will disable previous dates before today
         enableTime: true,
         dateFormat: "d-m-Y H:i",
       },

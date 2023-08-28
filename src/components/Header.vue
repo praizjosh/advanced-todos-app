@@ -1,17 +1,18 @@
 <template>
-  <header
-    class="bg-white my-6 flex flex-col space-y-4 px-8 py-8 shadow rounded-2xl"
-  >
-    <div class="flex justify-between items-center space-x-4">
-      <div class="w-1/2 md:w-3/5">
-        <h1 class="font-medium text-xl md:text-2xl text-sky-500">
-          Hello,
-          <span>
-            {{ greeting() }}
-          </span>
-        </h1>
+  <header class="bg-white my-4 flex flex-col space-y-6 p-8 shadow rounded-2xl">
+    <div
+      class="flex flex-col md:flex-row justify-between md:items-center space-y-4 md:space-x-4"
+    >
+      <!-- <div class="w-full md:flex-row"> -->
+      <div
+        class="w-full flex flex-row items-center justify-start space-y-0 space-x-1"
+      >
+        <h1 class="font-medium text-xl md:text-2xl text-gray-500">Hello,</h1>
+        <span class="text-xl md:text-2xl text-sky-500">
+          {{ greeting() }}
+        </span>
       </div>
-      <div class="w-1/2 md:w-2/5">
+      <div class="w-full md:w-2/5">
         <Button
           @click="toggleAddTask"
           :showAddTask="showAddTask"
@@ -21,6 +22,7 @@
               ? 'bg-red-600 hover:bg-red-700'
               : 'bg-sky-600 hover:bg-sky-700'
           "
+          class="w-full"
         />
       </div>
     </div>
@@ -54,7 +56,9 @@
         />
       </div>
 
-      <div class="w-full flex space-x-4 justify-evenly items-center">
+      <div
+        class="w-full flex flex-col md:flex-row space-y-2 md:space-x-4 justify-evenly items-center"
+      >
         <Button
           @click="addTask"
           text="Add Task"
@@ -62,12 +66,20 @@
         />
 
         <Button
-          @click="clearTasks"
-          text="Clear"
+          @click="showDeleteModal"
+          text="Clear Tasks"
           class="w-full py-2 px-4 bg-pink-600 hover:bg-pink-700 text-white rounded-md"
         />
       </div>
     </div>
+
+    <!-- Insert the modal component -->
+    <delete-task-modal
+      :show="isDeleteModalOpen"
+      @confirm="handleDeleteConfirmation"
+      @cancel="closeDeleteModal"
+      text="Are you sure you want to clear all tasks?"
+    />
   </header>
 </template>
 
@@ -76,6 +88,7 @@ import { parse, format } from "date-fns"; // Import Date formatter function
 import Button from "./Button.vue";
 import Summary from "./Summary.vue";
 import Calendar from "./Calendar.vue";
+import DeleteTaskModal from "@/components/DeleteTaskModal.vue";
 
 export default {
   data() {
@@ -84,6 +97,8 @@ export default {
       newTask: "",
       dueDate: null,
       calendarOpen: true,
+      isDeleteModalOpen: false,
+      delete: null,
     };
   },
   created() {},
@@ -92,6 +107,7 @@ export default {
     Button,
     Calendar,
     Summary,
+    DeleteTaskModal,
   },
   methods: {
     greeting() {
@@ -119,7 +135,10 @@ export default {
         // this.resetCalendar();
         this.dueDate = null; // Set dueDate back to null
       } else {
-        alert("Field can't be blank. Please enter a valid task and due date.");
+        this.$notify({
+          type: "error",
+          text: "Field can't be blank. Please enter a valid task and due date.",
+        });
       }
     },
     formatDueDate(dueDate) {
@@ -134,9 +153,25 @@ export default {
     //     calendar.clear();
     //   }
     // },
+    handleDeleteConfirmation() {
+      this.clearTasks(); // Clear all tasks
+      this.$notify({
+        type: "success",
+        text: "Tasks cleared successfully",
+      });
+      this.closeDeleteModal(); // Close the modal
+    },
+
     clearTasks() {
       this.$store.dispatch("clearTasks"); // Clear all the tasks
       this.newTask = ""; // Clear the input field
+    },
+    showDeleteModal() {
+      this.isDeleteModalOpen = true;
+    },
+    closeDeleteModal() {
+      this.isDeleteModalOpen = false;
+      this.delete = null;
     },
   },
 };

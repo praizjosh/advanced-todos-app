@@ -27,7 +27,9 @@
               />
             </svg>
           </div>
-          <span class="text-xl font-bold">{{ tasks.length }}</span>
+          <span class="text-xl text-slate-700 font-bold">{{
+            tasks.length
+          }}</span>
         </div>
         <span class="text-gray-600 text-sm">Tasks</span>
       </div>
@@ -52,7 +54,9 @@
               />
             </svg>
           </div>
-          <span class="text-xl font-bold">{{ completedTasksCount }}</span>
+          <span class="text-xl text-slate-700 font-bold">{{
+            completedTasksCount
+          }}</span>
         </div>
         <span class="text-gray-600 text-sm">Completed</span>
       </div>
@@ -76,7 +80,9 @@
               />
             </svg>
           </div>
-          <span class="text-xl font-bold">{{ pendingTasksCount }}</span>
+          <span class="text-xl text-slate-700 font-bold">{{
+            pendingTasksCount
+          }}</span>
         </div>
         <span class="text-gray-600 text-sm">Pending</span>
       </div>
@@ -99,7 +105,9 @@
               />
             </svg>
           </div>
-          <span class="text-xl font-bold">{{ overdueTasksCount }}</span>
+          <span class="text-xl text-slate-700 font-bold">{{
+            overdueTasksCount
+          }}</span>
         </div>
         <span class="text-gray-600 text-sm">Overdue</span>
       </div>
@@ -125,6 +133,16 @@ export default {
       return this.tasks.filter(
         (task) => !task.completed && new Date(task.dueDate) < now
       ).length;
+    },
+  },
+  methods: {
+    showNotification() {
+      console.log("show notification");
+      this.$notify({
+        title: "Notification Title",
+        text: "This is the notification content.",
+        duration: 5000, // Optional: Set the duration (in milliseconds) for how long the notification should be shown.
+      });
     },
   },
 };

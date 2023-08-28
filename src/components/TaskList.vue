@@ -31,7 +31,7 @@
               :key="index"
               :class="{
                 'completed-task': task.completed,
-                'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-600': true,
+                'bg-white border-b hover:bg-indigo-50': true,
               }"
             >
               <td class="w-4 p-4">

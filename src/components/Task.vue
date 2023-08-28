@@ -2,9 +2,12 @@
 
 <template>
   <div
-    class="bg-white flex mb-2 items-center justify-between px-2 py-3 space-x-2 rounded-2xl"
+    class="bg-white flex mb-2 items-center justify-between px-2 py-4 p space-x-2 rounded-xl shadow"
     :class="{
       'opacity-50': task.completed,
+      'border-l-8 hover:text-white border-red-500 hover:bg-red-500': isOverdue(
+        new Date(task.dueDate)
+      ), // Apply the class for overdue tasks
     }"
   >
     <div class="flex items-center px-3 space-x-3">
@@ -42,10 +45,10 @@
             'line-through opacity-40': task.completed,
           }"
         >
-          <span class="text-xl">
+          <span class="text-lg">
             {{ task.description }}
           </span>
-          <span class="text-sm opacity-80">Due: {{ task.dueDate }}</span>
+          <span class="text-xs opacity-80">Due: {{ task.dueDate }}</span>
         </div>
       </template>
 
@@ -133,11 +136,11 @@
       </svg>
     </div>
 
-    <!-- Use the modal component -->
     <delete-task-modal
       :show="isDeleteModalOpen"
-      @delete="handleDeleteTask"
+      @confirm="handleDeleteConfirmation"
       @cancel="closeDeleteModal"
+      :text="'Are you sure you want to delete this task?'"
     />
   </div>
 </template>
@@ -145,7 +148,7 @@
 <script>
 import DeleteTaskModal from "@/components/DeleteTaskModal.vue";
 import Calendar from "./Calendar.vue";
-import { parse, format } from "date-fns";
+import { parse, format, isPast } from "date-fns";
 
 export default {
   name: "Task",
@@ -196,13 +199,20 @@ export default {
 
         this.cancelEditing();
       } else {
-        alert("Field can't be blank. Please enter a valid task or due date.");
+        this.$notify({
+          type: "error",
+          text: "Field can't be blank. Please enter a valid task", // Field can't be blank. Please enter a valid task and due date.
+        });
       }
     },
     duplicateTask(index) {
       const taskToDuplicate = this.task;
       const duplicatedTask = JSON.parse(JSON.stringify(taskToDuplicate)); // Make copy of the task
       this.$store.commit("addTask", duplicatedTask); // Update the store with the new task
+      this.$notify({
+        type: "success",
+        text: "Task duplicated",
+      });
     },
     showDeleteModal(index) {
       this.isDeleteModalOpen = true;
@@ -212,10 +222,18 @@ export default {
       this.isDeleteModalOpen = false;
       this.deleteIndex = null;
     },
+    handleDeleteConfirmation() {
+      this.handleDeleteTask(); // Delete individual task using the provided parameter
+      this.closeDeleteModal(); // Close the modal
+    },
     handleDeleteTask() {
       if (this.deleteIndex !== null) {
         this.$store.commit("DELETE_TASK", this.deleteIndex);
         this.closeDeleteModal();
+        this.$notify({
+          type: "success",
+          text: "Task deleted successfully",
+        });
       }
     },
     toggleTaskCompletion() {
@@ -223,6 +241,15 @@ export default {
         index: this.index,
         completed: this.task.completed,
       });
+      if (this.task.completed === true) {
+        this.$notify({
+          type: "success",
+          text: "Task completed",
+        });
+      }
+    },
+    isOverdue(dueDate) {
+      return isPast(dueDate);
     },
   },
 };
