@@ -1,14 +1,23 @@
+<!-- Task.vue -->
+
 <template>
   <div
-    class="bg-white flex my-2 items-center justify-between px-2 py-3 space-x-2 rounded-2xl"
+    class="bg-white flex mb-2 items-center justify-between px-2 py-3 space-x-2 rounded-2xl"
+    :class="{
+      'opacity-50': task.completed,
+    }"
   >
     <div class="flex items-center px-3 space-x-3">
       <input
+        :id="'checkbox-table-task-' + index"
+        v-model="task.completed"
+        @change="toggleTaskCompletion"
         type="checkbox"
         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
       />
       <label class="sr-only">checkbox</label>
       <svg
+        @click="duplicateTask(index)"
         class="w-[20px] h-[20px] text-gray-400 hover:text-gray-700"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -25,15 +34,36 @@
       </svg>
     </div>
     <div class="flex flex-col space-y-1">
-      <h3>
-        Lorem ipsumet consectetur, adipisicing elit. Velit, possimus
-        praesentilias!
-      </h3>
-      <span class="text-sm text-gray-400">Due Date:</span>
+      <!-- Display original task or input field for editing -->
+      <template v-if="editingIndex !== index">
+        <div
+          class="flex flex-col"
+          :class="{
+            'line-through opacity-40': task.completed,
+          }"
+        >
+          <span class="text-xl">
+            {{ task.description }}
+          </span>
+          <span class="text-sm opacity-80">Due: {{ task.dueDate }}</span>
+        </div>
+      </template>
+
+      <!-- Else display intial task info -->
+      <template v-else>
+        <input
+          v-model="editedTask.description"
+          @keydown.enter="updateTask(index)"
+          @keydown.escape="cancelEditing"
+          class="w-full bg-slate-50 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 p-1.5 opacity-90"
+        />
+        <Calendar v-model="editedTask.dueDate" />
+      </template>
     </div>
     <div class="flex items-center px-3 space-x-3">
       <template v-if="editingIndex === index">
         <svg
+          @click="updateTask(index)"
           class="w-[20px] h-[20px] text-green-600 hover:text-green-700"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
@@ -50,6 +80,7 @@
         </svg>
 
         <svg
+          @click="cancelEditing"
           class="w-[22px] h-[22px] text-pink-600 hover:text-gray-700"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
@@ -67,6 +98,7 @@
       </template>
       <template v-else>
         <svg
+          @click="startEditing(index)"
           class="w-[20px] h-[20px] text-green-600 hover:text-gray-700"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
@@ -84,6 +116,7 @@
       </template>
       <span class="text-slate-300">|</span>
       <svg
+        @click="showDeleteModal(index)"
         class="w-[20px] h-[20px] text-red-600 hover:text-gray-700"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -99,14 +132,98 @@
         />
       </svg>
     </div>
+
+    <!-- Use the modal component -->
+    <delete-task-modal
+      :show="isDeleteModalOpen"
+      @delete="handleDeleteTask"
+      @cancel="closeDeleteModal"
+    />
   </div>
 </template>
 
 <script>
+import DeleteTaskModal from "@/components/DeleteTaskModal.vue";
+import Calendar from "./Calendar.vue";
+import { parse, format } from "date-fns";
+
 export default {
   name: "Task",
   props: {
     task: Object,
+    index: Number,
+  },
+  data() {
+    return {
+      editingIndex: -1,
+      editedTask: {
+        description: this.task.description,
+        dueDate: this.task.dueDate,
+      },
+      isDeleteModalOpen: false,
+      deleteIndex: null,
+    };
+  },
+  components: {
+    DeleteTaskModal,
+    Calendar,
+  },
+  methods: {
+    startEditing() {
+      this.editingIndex = this.index;
+    },
+    cancelEditing() {
+      this.editingIndex = -1;
+    },
+    updateTask() {
+      if (this.editedTask.description.trim() !== "") {
+        this.$store.commit("UPDATE_TASK", {
+          index: this.index,
+          task: {
+            ...this.task,
+            description: this.editedTask.description,
+            dueDate: this.editedTask.dueDate,
+            //  completed: this.task.completed, // Preserve completion status
+          },
+        });
+
+        const parsedDueDate = parse(
+          this.editedTask.dueDate,
+          "dd-M-yyyy HH:mm",
+          new Date()
+        );
+        this.task.dueDate = format(parsedDueDate, "dd MMM yyyy HH:mm a");
+
+        this.cancelEditing();
+      } else {
+        alert("Field can't be blank. Please enter a valid task or due date.");
+      }
+    },
+    duplicateTask(index) {
+      const taskToDuplicate = this.task;
+      const duplicatedTask = JSON.parse(JSON.stringify(taskToDuplicate)); // Make copy of the task
+      this.$store.commit("addTask", duplicatedTask); // Update the store with the new task
+    },
+    showDeleteModal(index) {
+      this.isDeleteModalOpen = true;
+      this.deleteIndex = index;
+    },
+    closeDeleteModal() {
+      this.isDeleteModalOpen = false;
+      this.deleteIndex = null;
+    },
+    handleDeleteTask() {
+      if (this.deleteIndex !== null) {
+        this.$store.commit("DELETE_TASK", this.deleteIndex);
+        this.closeDeleteModal();
+      }
+    },
+    toggleTaskCompletion() {
+      this.$store.commit("UPDATE_TASK_COMPLETED", {
+        index: this.index,
+        completed: this.task.completed,
+      });
+    },
   },
 };
 </script>

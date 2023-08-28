@@ -14,6 +14,7 @@
 
 <script>
 export default {
+  name: "Footer",
   computed: {
     currentYear() {
       return new Date().getFullYear();

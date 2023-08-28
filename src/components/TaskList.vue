@@ -201,7 +201,7 @@ export default {
     },
   },
   components: {
-    DeleteTaskModal, // Move this outside the computed property
+    DeleteTaskModal,
     Calendar,
   },
   methods: {
