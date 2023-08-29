@@ -7,7 +7,7 @@
       <div
         class="w-full flex flex-row items-center justify-start space-y-0 space-x-1"
       >
-        <h1 class="font-medium text-xl md:text-2xl text-gray-500">Hello,</h1>
+        <h1 class="font-medium text-xl md:text-2xl text-gray-600">Hello,</h1>
         <span class="text-xl md:text-2xl text-sky-500">
           {{ greeting() }}
         </span>

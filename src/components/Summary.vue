@@ -118,6 +118,7 @@
 <script>
 export default {
   name: "Summary",
+  components: {},
   computed: {
     tasks() {
       return this.$store.state.tasks;
@@ -135,15 +136,7 @@ export default {
       ).length;
     },
   },
-  methods: {
-    showNotification() {
-      console.log("show notification");
-      this.$notify({
-        title: "Notification Title",
-        text: "This is the notification content.",
-        duration: 5000, // Optional: Set the duration (in milliseconds) for how long the notification should be shown.
-      });
-    },
-  },
+
+  methods: {},
 };
 </script>

@@ -3,6 +3,7 @@
 <template>
   <div
     class="bg-white flex mb-2 items-center justify-between px-2 py-4 p space-x-2 rounded-xl shadow"
+    class="bg-white flex mb-2 items-center justify-between p-2 space-x-2 rounded-xl shadow"
     :class="{
       'opacity-50': task.completed,
       'border-l-8 hover:text-white border-red-500 hover:bg-red-500': isOverdue(

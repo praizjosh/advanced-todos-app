@@ -2,7 +2,6 @@
   <div class="mx-auto p-4 w-full md:w-[560px] mt-0 md:mt-16" id="app">
     <Header />
     <Tasks />
-    <!-- <TaskList /> -->
     <Footer />
     <notifications position="bottom right" class="cursor-pointer" />
   </div>
@@ -11,7 +10,6 @@
 <script>
 import Header from "./components/Header.vue";
 import Tasks from "./components/Tasks.vue";
-import TaskList from "./components/TaskList.vue";
 import Footer from "./components/Footer.vue";
 
 export default {
@@ -19,7 +17,6 @@ export default {
   components: {
     Header,
     Tasks,
-    TaskList,
     Footer,
   },
 };

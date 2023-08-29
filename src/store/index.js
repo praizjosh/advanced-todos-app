@@ -27,12 +27,12 @@ export default new Vuex.Store({
       state.tasks[index] = task;
     },
     UPDATE_TASK(state, { index, task }) {
-      state.tasks[index] = task;
+      Vue.set(state.tasks, index, task);
     },
     UPDATE_TASK_COMPLETED(state, { index, completed }) {
       state.tasks[index].completed = completed;
     },
-    DELETE_TASK(state, { index, task }) {
+    DELETE_TASK(state, index) {
       state.tasks.splice(index, 1);
     },
   },
