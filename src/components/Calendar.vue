@@ -5,6 +5,7 @@
     v-model="selectedDate"
     :config="flatpickrConfig"
     placeholder="Select date and time"
+    id="fp-calendar"
   />
 </template>
 

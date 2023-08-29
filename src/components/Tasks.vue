@@ -1,21 +1,33 @@
 <!-- Tasks.vue -->
 
 <template>
-  <div>
-    <template v-if="pendingTasksCount !== 0">
-      <h2 class="text-pink-500 font-semibold uppercase mt-8 mb-3">
-        Pending Tasks
-      </h2>
+  <div class="mt-8">
+    <template v-if="TasksCount !== 0">
+      <div class="my-4">
+        <label for="filterTasks" class="text-gray-800 font-semibold"
+          >Filter tasks:</label
+        >
+        <select
+          id="filterTasks"
+          name="filterTasks"
+          v-model="selectedFilter"
+          class="ml-2 rounded-md border border-gray-300 px-2 py-1"
+        >
+          <option value="all">All</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+          <option value="overdue">Overdue</option>
+        </select>
+      </div>
     </template>
 
-    <select v-model="selectedFilter">
-      <option value="all">All</option>
-      <option value="completed">Completed</option>
-      <option value="pending">Pending</option>
-      <option value="overdue">Overdue</option>
-    </select>
-
-    <Task v-for="(task, index) in filteredTasks" :key="index" :task="task" />
+    <Task
+      v-for="(task, index) in filteredTasks"
+      :key="index"
+      :task="task"
+      :index="index"
+      @toggleCompletion="toggleTaskCompletion(index)"
+    />
   </div>
 </template>
 
@@ -29,10 +41,12 @@ export default {
   },
   computed: {
     tasks() {
-      return this.$store.state.tasks;
+      // return this.$store.state.tasks;
+      return this.$store.state.tasks || []; // Handle empty tasks array
     },
-    pendingTasksCount() {
-      return this.tasks.filter((task) => !task.completed).length;
+    TasksCount() {
+      // return this.tasks.length;
+      return this.tasks.filter((task) => task).length;
     },
     filteredTasks() {
       if (this.selectedFilter === "all") {
@@ -53,6 +67,23 @@ export default {
     return {
       selectedFilter: "all",
     };
+  },
+  methods: {
+    toggleTaskCompletion(index) {
+      const task = this.tasks[index];
+      if (task) {
+        const updatedTask = { ...task, completed: !task.completed };
+        this.$store.commit("UPDATE_TASK", {
+          index: index,
+          task: updatedTask,
+        });
+        const taskStatus = this.task.completed ? "completed" : "incomplete";
+        this.$notify({
+          type: "success",
+          text: `Task marked as ${taskStatus}`,
+        });
+      }
+    },
   },
 };
 </script>

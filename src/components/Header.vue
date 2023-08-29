@@ -40,6 +40,8 @@
     >
       <div class="w-full">
         <input
+          id="newTask"
+          name="newTask"
           v-model="newTask"
           @keyup.enter="addTask"
           placeholder="Add a new task..."
@@ -132,7 +134,6 @@ export default {
           dueDate: formattedDueDate,
         });
         this.newTask = "";
-        // this.resetCalendar();
         this.dueDate = null; // Set dueDate back to null
       } else {
         this.$notify({
@@ -143,7 +144,7 @@ export default {
     },
     formatDueDate(dueDate) {
       const parsedDate = parse(dueDate, "d-M-yyyy H:mm", new Date()); // Parse the selected date using "d-M-yyyy H:mm" format
-      return format(parsedDate, "dd MMM yyyy HH:mm a"); // Format the date as "30 Aug 2023, 02:10 AM"
+      return format(parsedDate, "dd MMM yyyy h:mm a"); // Format the date as "30 Aug 2023, 02:10 AM"
     },
     // resetCalendar() {
     //   const calendar = document.querySelector("#cal").flatpickr();

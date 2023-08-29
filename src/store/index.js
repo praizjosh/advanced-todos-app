@@ -10,27 +10,29 @@ export default new Vuex.Store({
   state: {
     tasks: [],
   },
-  getters: {
-  },
   mutations: {
     addTask(state, { description, dueDate }) {
-      state.tasks.push({
+      Vue.set(state.tasks, state.tasks.length, {
         description: description,
         dueDate: dueDate,
-        completed: false
+        completed: false,
       });
     },
     CLEAR_TASKS(state) {
-      state.tasks = []; // Reset state:tasks to initial render state
+      state.tasks = [];
     },
     EDIT_TASK(state, { index, task }) {
-      state.tasks[index] = task;
+      Vue.set(state.tasks, index, task);
     },
     UPDATE_TASK(state, { index, task }) {
       Vue.set(state.tasks, index, task);
     },
-    UPDATE_TASK_COMPLETED(state, { index, completed }) {
-      state.tasks[index].completed = completed;
+    TOGGLE_TASK_COMPLETION(state, index) {
+      if (state.tasks[index]) {
+        Vue.set(state.tasks[index], "completed", !state.tasks[index].completed);
+      } else {
+        console.error('Task not found at index:', index);
+      }
     },
     DELETE_TASK(state, index) {
       state.tasks.splice(index, 1);
@@ -48,6 +50,9 @@ export default new Vuex.Store({
     },
     updateTask({ commit }, { index, task }) {
       commit("UPDATE_TASK", { index, task });
+    },
+    toggleTaskCompletion({ commit }, index) {
+      commit('TOGGLE_TASK_COMPLETION', index);
     },
     deleteTask({ commit }, index) {
       commit("DELETE_TASK", index);
