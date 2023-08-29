@@ -71,7 +71,7 @@
           <Calendar v-model="editedTask.dueDate" id="fp-calendar1" />
         </template>
       </div>
-      <div class="flex items-center px-3 space-x-1">
+      <div class="flex items-center px-3 space-x-2">
         <template v-if="editingIndex === index">
           <svg
             @click="updateTask(index)"
@@ -144,6 +144,7 @@
         </template>
       </div>
     </div>
+
     <delete-task-modal
       :show="isDeleteModalOpen"
       @confirm="handleDeleteConfirmation"
@@ -154,7 +155,7 @@
 </template>
 
 <script>
-import DeleteTaskModal from "@/components/DeleteTaskModal.vue";
+import DeleteTaskModal from "./DeleteTaskModal.vue";
 import Calendar from "./Calendar.vue";
 import { parse, format, isPast } from "date-fns";
 
@@ -211,7 +212,7 @@ export default {
       } else {
         this.$notify({
           type: "error",
-          text: "Field can't be blank. Please enter a valid task or Due date ", // Field can't be blank. Please enter a valid task and due date.
+          text: "Fields can't be blank. Please enter a valid task or Due date ", // Field can't be blank. Please enter a valid task and due date.
         });
       }
     },
@@ -253,15 +254,6 @@ export default {
     emitToggleCompletion() {
       this.$emit("toggleCompletion");
     },
-    // toggleTaskCompletion(index) {
-    //   this.$store.dispatch("toggleTaskCompletion", index);
-    //   this.$forceUpdate();
-    //   //const taskStatus = this.task.completed ? "completed" : "incomplete";
-    //   // this.$notify({
-    //   //   type: "success",
-    //   //   text: `Task marked as ${taskStatus}`,
-    //   // });
-    // },
     isOverdue(dueDate) {
       return isPast(dueDate);
     },

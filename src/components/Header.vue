@@ -1,9 +1,10 @@
+<!-- Header.vue -->
+
 <template>
   <header class="bg-white my-4 flex flex-col space-y-6 p-8 shadow rounded-2xl">
     <div
       class="flex flex-col md:flex-row justify-between md:items-center space-y-4 md:space-x-4"
     >
-      <!-- <div class="w-full md:flex-row"> -->
       <div
         class="w-full flex flex-row items-center justify-start space-y-0 space-x-1"
       >
@@ -68,20 +69,12 @@
         />
 
         <Button
-          @click="showDeleteModal"
+          @click="handleDeleteConfirmation"
           text="Clear Tasks"
           class="w-full py-2 px-4 bg-pink-600 hover:bg-pink-700 text-white rounded-md"
         />
       </div>
     </div>
-
-    <!-- Insert the modal component -->
-    <delete-task-modal
-      :show="isDeleteModalOpen"
-      @confirm="handleDeleteConfirmation"
-      @cancel="closeDeleteModal"
-      text="Are you sure you want to clear all tasks?"
-    />
   </header>
 </template>
 
@@ -90,7 +83,6 @@ import { parse, format } from "date-fns"; // Import Date formatter function
 import Button from "./Button.vue";
 import Summary from "./Summary.vue";
 import Calendar from "./Calendar.vue";
-import DeleteTaskModal from "@/components/DeleteTaskModal.vue";
 
 export default {
   data() {
@@ -99,7 +91,6 @@ export default {
       newTask: "",
       dueDate: null,
       calendarOpen: true,
-      isDeleteModalOpen: false,
       delete: null,
     };
   },
@@ -109,7 +100,6 @@ export default {
     Button,
     Calendar,
     Summary,
-    DeleteTaskModal,
   },
   methods: {
     greeting() {
@@ -138,7 +128,7 @@ export default {
       } else {
         this.$notify({
           type: "error",
-          text: "Field can't be blank. Please enter a valid task and due date.",
+          text: "Fields can't be blank. Please enter a valid task and due date.",
         });
       }
     },
@@ -146,24 +136,17 @@ export default {
       const parsedDate = parse(dueDate, "d-M-yyyy H:mm", new Date()); // Parse the selected date using "d-M-yyyy H:mm" format
       return format(parsedDate, "dd MMM yyyy h:mm a"); // Format the date as "30 Aug 2023, 02:10 AM"
     },
+    clearTasks() {
+      this.$store.dispatch("clearTasks"); // Clear all the tasks
+      this.newTask = ""; // Clear the input field
+    },
     handleDeleteConfirmation() {
+      // window.alert("Are you sure you want to delete?");
       this.clearTasks(); // Clear all tasks
       this.$notify({
         type: "success",
         text: "Tasks cleared successfully",
       });
-      this.closeDeleteModal(); // Close the modal
-    },
-    clearTasks() {
-      this.$store.dispatch("clearTasks"); // Clear all the tasks
-      this.newTask = ""; // Clear the input field
-    },
-    showDeleteModal() {
-      this.isDeleteModalOpen = true;
-    },
-    closeDeleteModal() {
-      this.isDeleteModalOpen = false;
-      this.delete = null;
     },
   },
 };

@@ -69,15 +69,15 @@ export default {
     };
   },
   methods: {
-    toggleTaskCompletion(index) {
-      const task = this.tasks[index];
+    toggleTaskCompletion() {
+      const task = this.tasks;
       if (task) {
         const updatedTask = { ...task, completed: !task.completed };
         this.$store.commit("UPDATE_TASK", {
-          index: index,
+          // index: index,
           task: updatedTask,
         });
-        const taskStatus = this.task.completed ? "completed" : "incomplete";
+        const taskStatus = task.completed ? "completed" : "incomplete";
         this.$notify({
           type: "success",
           text: `Task marked as ${taskStatus}`,

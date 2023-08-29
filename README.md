@@ -74,4 +74,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 **Note:**
 
-If you have any questions about this app or any thing else, feel free to reach out to me at [@praizjosh](https://github.com/praizjosh/) on GitHub
+If you have any questions about this app or any thing else, feel free to reach out to me at [@praizjosh](https://twitter.com/praizjosh/) on Twitter. Cheers!
