@@ -78,10 +78,10 @@ export default {
           task: updatedTask,
         });
         const taskStatus = task.completed ? "completed" : "incomplete";
-        this.$notify({
-          type: "success",
-          text: `Task marked as ${taskStatus}`,
-        });
+        // this.$notify({
+        //   type: "success",
+        //   text: `Task marked as ${taskStatus}`,
+        // });
       }
     },
   },
