@@ -1,6 +1,14 @@
 {
-  "name": "vue2-todo-list-app",
+  "name": "advanced-todos-app",
   "version": "1.0.0",
+  "description": "A sophisticated To-Do List application built with Vue.js 2 and Tailwindcss.",
+  "author": "Josh Praise",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/praizjosh/advanced-todos-app.git" 
+  },
+  "keywords": ["vue", "vue2", "vuex", "todo", "task", "list", "task manager", "task manager", "application", "tailwindcss", "flatpickr"],
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
