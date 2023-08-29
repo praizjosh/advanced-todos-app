@@ -146,14 +146,6 @@ export default {
       const parsedDate = parse(dueDate, "d-M-yyyy H:mm", new Date()); // Parse the selected date using "d-M-yyyy H:mm" format
       return format(parsedDate, "dd MMM yyyy h:mm a"); // Format the date as "30 Aug 2023, 02:10 AM"
     },
-    // resetCalendar() {
-    //   const calendar = document.querySelector("#cal").flatpickr();
-    //   if (calendar) {
-    //     console.log(calendar);
-    //     // this.$refs.dueDateCalendar.clear(); // Call the reset method of the Calendar component
-    //     calendar.clear();
-    //   }
-    // },
     handleDeleteConfirmation() {
       this.clearTasks(); // Clear all tasks
       this.$notify({
@@ -162,7 +154,6 @@ export default {
       });
       this.closeDeleteModal(); // Close the modal
     },
-
     clearTasks() {
       this.$store.dispatch("clearTasks"); // Clear all the tasks
       this.newTask = ""; // Clear the input field

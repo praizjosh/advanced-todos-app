@@ -2,7 +2,7 @@
 <template>
   <div
     v-if="show"
-    class="fixed right-0 top-0 flex h-full w-full z-50 p-4 items-center justify-center overflow-x-hidden overflow-y-auto md:inset-0 max-h-full bg-black bg-opacity-60 py-10"
+    class="fixed right-0 top-0 flex h-full w-full z-99 p-4 items-center justify-center overflow-x-hidden overflow-y-auto max-h-full bg-black bg-opacity-70 py-10"
   >
     <div class="relative bg-white rounded-lg shadow">
       <button
