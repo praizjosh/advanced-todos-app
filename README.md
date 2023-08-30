@@ -13,6 +13,7 @@ Welcome to the Advanced ToDos App! This is a Vue.js 2 application that allows yo
 - Set due dates for tasks.
 - View completed tasks.
 - Highlight overdue tasks in red.
+- Reusable components (Header, Footer, Summary, Task, Tasks, Button, Calendar, Modal)
 
 ## Table of Contents
 
@@ -48,7 +49,7 @@ This project relies on the following dependencies:
 
 - [core-js](https://www.npmjs.com/package/core-js): ^3.8.3
 - [date-fns](https://www.npmjs.com/package/date-fns): ^2.30.0
-- [vue](https://www.npmjs.com/package/vue): ^2.6.14
+- [vue 2](https://www.npmjs.com/package/vue): ^2.6.14
 - [vue-flatpickr-component](https://www.npmjs.com/package/vue-flatpickr-component): ^8.1.8
 - [vue-notification](https://www.npmjs.com/package/vue-notification): ^1.3.20
 - [vuex](https://www.npmjs.com/package/vuex): ^3.6.2
