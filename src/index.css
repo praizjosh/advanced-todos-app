@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Mulish", sans-serif;
+  src: url("./assets/fonts/Mulish-VariableFont_wght.ttf") format("truetype"),
+    url("./assets/fonts/Mulish-Italic-VariableFont_wght.ttf") format("truetype");
+}

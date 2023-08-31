@@ -52,7 +52,9 @@
             <span class="text-lg">
               {{ task.description }}
             </span>
-            <span class="text-xs opacity-80">Due: {{ task.dueDate }}</span>
+            <span class="text-xs opacity-80"
+              ><i>Due: {{ task.dueDate }} </i></span
+            >
           </div>
         </template>
 
