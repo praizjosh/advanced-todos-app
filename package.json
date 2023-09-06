@@ -6,9 +6,21 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/praizjosh/advanced-todos-app.git" 
+    "url": "https://github.com/praizjosh/advanced-todos-app.git"
   },
-  "keywords": ["vue", "vue2", "vuex", "todo", "task", "list", "task manager", "task manager", "application", "tailwindcss", "flatpickr"],
+  "keywords": [
+    "vue",
+    "vue2",
+    "vuex",
+    "todo",
+    "task",
+    "list",
+    "task manager",
+    "task manager",
+    "application",
+    "tailwindcss",
+    "flatpickr"
+  ],
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -27,6 +39,7 @@
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "autoprefixer": "^10.4.15",
+    "cypress": "^13.0.0",
     "postcss": "^8.4.28",
     "tailwindcss": "^3.3.3",
     "vue-template-compiler": "^2.6.14"
