@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto p-4 w-full md:w-[560px] mt-0 md:mt-16" id="app">
+  <div class="mx-auto p-4 w-full md:w-[560px] m-0 md:mt-16" id="app">
     <Header />
     <Tasks />
     <Footer />
